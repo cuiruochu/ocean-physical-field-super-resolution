@@ -107,7 +107,7 @@ uv run python .\scripts\download_cmems_waves.py `
 ## 下载结果
 
 - 下载文件格式是 NetCDF，扩展名为 `.nc`
-- 默认下载目录是项目下的 [downloads](<E:\projects\CMEMS\downloads>)，也就是 `E:\projects\CMEMS\downloads`
+- 默认下载目录是项目下的 `./downloads`
 - 如果传入 `--output-dir`，文件会下载到你指定的目录
 - 脚本执行成功后，会在终端打印每个文件的实际完整路径
 
@@ -121,8 +121,8 @@ multiyear_开始时间_结束时间_lon最小经度_最大经度_lat最小纬度
 例如：
 
 ```text
-E:\projects\CMEMS\downloads\analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45.nc
-E:\projects\CMEMS\downloads\multiyear_20260101T000000_20260501T000000_lon105_135_lat0_45.nc
+./downloads/analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45.nc
+./downloads/multiyear_20260101T000000_20260501T000000_lon105_135_lat0_45.nc
 ```
 
 ## 可选参数
@@ -136,39 +136,39 @@ E:\projects\CMEMS\downloads\multiyear_20260101T000000_20260501T000000_lon105_135
 
 ## NC 转 NPY
 
-脚本 [split_nc_to_npy.py](<E:\projects\CMEMS\scripts\split_nc_to_npy.py>)，用于把某个 `.nc` 文件按时间维切分成一批 `.npy` 文件。
+脚本 `./scripts/split_nc_to_npy.py`，用于把某个 `.nc` 文件按时间维切分成一批 `.npy` 文件。
 
 - 每个 `.npy` 文件对应一个时间点和一个变量
 - 文件名格式是 `2026-01-01T00.npy`
 - 数据统一转换为 `float32`
 - 原始缺失值会继续保留为 `NaN`
-- 默认输出目录是项目下的 [data](<E:\projects\CMEMS\data>)，最终会自动拼接成 `data\nc文件名\变量名\`
+- 默认输出目录是项目下的 `./data`，最终会自动拼接成 `./data/nc文件名/变量名/`
 - 每个 `.npy` 文件的 shape 是 `(纬度数, 经度数)`
 - 当前变量目录会按 `VMDR`、`VTM10`、`VHM0` 分开保存
 
 例如输入文件：
 
 ```text
-E:\projects\CMEMS\downloads\analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45.nc
+./downloads/analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45.nc
 ```
 
 默认会输出到：
 
 ```text
-E:\projects\CMEMS\data\analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45\
+./data/analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45/
 ```
 
 其中目录结构类似：
 
 ```text
-E:\projects\CMEMS\data\analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45\
-  VMDR\
+./data/analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45/
+  VMDR/
     2025-12-31T18.npy
     2025-12-31T21.npy
-  VTM10\
+  VTM10/
     2025-12-31T18.npy
     2025-12-31T21.npy
-  VHM0\
+  VHM0/
     2025-12-31T18.npy
     2025-12-31T21.npy
 ```
@@ -191,5 +191,74 @@ uv run python .\scripts\split_nc_to_npy.py `
 上面这条命令最终会输出到：
 
 ```text
-E:\projects\CMEMS\my_npy_data\analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45\
+./my_npy_data/analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45/
+```
+
+# ERA5
+
+## 下载 ERA5 数据
+ERA5 数据集下载地址：
+
+- [ERA5 single levels dataset](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels?tab=download)
+
+这里不使用欧洲中期天气预报中心提供的 SDK 下载。原因是 ERA5 这类数据集通常涉及排队、审核等流程，使用 SDK 下载不够直接，因此这里采用“在官网手动下载 `.nc` 文件，再用本项目脚本切分”的方式。
+
+## NC 转 NPY
+ERA5 的 `nc` 文件和哥白尼海事中心下载的 `nc` 文件结构不同，主要区别是时间维名字是 `valid_time`，不是 `time`。因此这里单独提供一个 ERA5 专用切分脚本：
+
+- `./scripts/split_era5_nc_to_npy.py`
+
+这个脚本的输出路径结构和哥白尼脚本保持一致：
+
+```text
+./data/ERA5的nc文件名/变量名/时间.npy
+```
+
+例如当前下载文件：
+
+```text
+./downloads/df44a36af69b40d1e1fa386759c08acc.nc
+```
+
+ERA5 文件中的变量是：
+
+- `mwd`
+- `mwp`
+- `swh`
+
+默认输出会类似：
+
+```text
+./data/df44a36af69b40d1e1fa386759c08acc/
+  mwd/
+    2026-01-01T00.npy
+    2026-01-01T01.npy
+  mwp/
+    2026-01-01T00.npy
+    2026-01-01T01.npy
+  swh/
+    2026-01-01T00.npy
+    2026-01-01T01.npy
+```
+
+每个 `.npy` 文件的特点：
+
+- 对应一个时间点和一个变量
+- shape 是 `(纬度数, 经度数)`
+- dtype 是 `float32`
+- 缺失值仍然保留为 `NaN`
+
+`pwsh` 示例：
+
+```powershell
+uv run python .\scripts\split_era5_nc_to_npy.py `
+  .\downloads\df44a36af69b40d1e1fa386759c08acc.nc
+```
+
+指定输出根目录时，仍然会自动拼接 `nc` 文件名：
+
+```powershell
+uv run python .\scripts\split_era5_nc_to_npy.py `
+  .\downloads\df44a36af69b40d1e1fa386759c08acc.nc `
+  --output-dir .\my_era5_data
 ```
