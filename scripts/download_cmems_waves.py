@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import os
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Iterable
 
@@ -32,15 +32,35 @@ PRODUCTS: dict[str, ProductConfig] = {
 
 def parse_datetime(value: str) -> datetime:
     normalized = value.strip()
+
+    if not (
+        normalized.endswith("Z")
+        or normalized.endswith("+00:00")
+        or normalized.endswith("+0000")
+    ):
+        raise argparse.ArgumentTypeError(
+            f"Invalid datetime: {value!r}. Use explicit UTC time with a trailing 'Z', "
+            "for example 2026-01-01T00:00:00Z."
+        )
+
     if normalized.endswith("Z"):
         normalized = f"{normalized[:-1]}+00:00"
 
     try:
-        return datetime.fromisoformat(normalized)
+        parsed = datetime.fromisoformat(normalized)
     except ValueError as exc:
         raise argparse.ArgumentTypeError(
-            f"Invalid datetime: {value!r}. Use ISO 8601, for example 2025-01-01 or 2025-01-01T12:00:00."
+            f"Invalid datetime: {value!r}. Use ISO 8601 UTC time, "
+            "for example 2026-01-01T00:00:00Z."
         ) from exc
+
+    if parsed.tzinfo is None:
+        raise argparse.ArgumentTypeError(
+            f"Invalid datetime: {value!r}. Timezone information is required. "
+            "Use UTC time with a trailing 'Z'."
+        )
+
+    return parsed.astimezone(UTC)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -61,8 +81,18 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-lon", type=float, required=True, help="Maximum longitude in degrees east.")
     parser.add_argument("--min-lat", type=float, required=True, help="Minimum latitude in degrees north.")
     parser.add_argument("--max-lat", type=float, required=True, help="Maximum latitude in degrees north.")
-    parser.add_argument("--start", type=parse_datetime, required=True, help="Start time, ISO 8601 format.")
-    parser.add_argument("--end", type=parse_datetime, required=True, help="End time, ISO 8601 format.")
+    parser.add_argument(
+        "--start",
+        type=parse_datetime,
+        required=True,
+        help="Start time in ISO 8601 UTC format, for example 2026-01-01T00:00:00Z.",
+    )
+    parser.add_argument(
+        "--end",
+        type=parse_datetime,
+        required=True,
+        help="End time in ISO 8601 UTC format, for example 2026-05-01T00:00:00Z.",
+    )
     parser.add_argument(
         "--output-dir",
         type=Path,

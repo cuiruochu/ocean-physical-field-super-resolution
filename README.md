@@ -29,8 +29,10 @@
 - 最大纬度：`45`
 - 最小经度：`105`
 - 最大经度：`135`
-- 开始时间：`2026-01-01T00:00:00`
-- 结束时间：`2026-05-01T00:00:00`
+- 开始时间：`2026-01-01T00:00:00Z`
+- 结束时间：`2026-05-01T00:00:00Z`
+
+下载脚本中的时间参数必须使用带 `Z` 的 UTC 时间格式，例如 `2026-01-01T00:00:00Z`。
 
 `cmd`:
 
@@ -42,8 +44,8 @@ uv run python .\scripts\download_cmems_waves.py ^
   --max-lon 135 ^
   --min-lat 0 ^
   --max-lat 45 ^
-  --start 2026-01-01T00:00:00 ^
-  --end 2026-05-01T00:00:00 ^
+  --start 2026-01-01T00:00:00Z ^
+  --end 2026-05-01T00:00:00Z ^
   --output-dir .\downloads
 ```
 
@@ -57,8 +59,8 @@ uv run python .\scripts\download_cmems_waves.py `
   --max-lon 135 `
   --min-lat 0 `
   --max-lat 45 `
-  --start 2026-01-01T00:00:00 `
-  --end 2026-05-01T00:00:00 `
+  --start 2026-01-01T00:00:00Z `
+  --end 2026-05-01T00:00:00Z `
   --output-dir .\downloads
 ```
 
@@ -72,8 +74,8 @@ uv run python ./scripts/download_cmems_waves.py \
   --max-lon 135 \
   --min-lat 0 \
   --max-lat 45 \
-  --start 2026-01-01T00:00:00 \
-  --end 2026-05-01T00:00:00 \
+  --start 2026-01-01T00:00:00Z \
+  --end 2026-05-01T00:00:00Z \
   --output-dir ./downloads
 ```
 
@@ -87,8 +89,8 @@ uv run python .\scripts\download_cmems_waves.py `
   --max-lon 135 `
   --min-lat 0 `
   --max-lat 45 `
-  --start 2026-01-01T00:00:00 `
-  --end 2026-05-01T00:00:00
+  --start 2026-01-01T00:00:00Z `
+  --end 2026-05-01T00:00:00Z
 ```
 
 只下载其中一个产品时：
@@ -100,8 +102,8 @@ uv run python .\scripts\download_cmems_waves.py `
   --max-lon 135 `
   --min-lat 0 `
   --max-lat 45 `
-  --start 2026-01-01T00:00:00 `
-  --end 2026-05-01T00:00:00
+  --start 2026-01-01T00:00:00Z `
+  --end 2026-05-01T00:00:00Z
 ```
 
 ## 下载结果
