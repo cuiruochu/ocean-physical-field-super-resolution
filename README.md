@@ -1,3 +1,34 @@
+# 本仓库的目的
+
+本仓库主要服务于“海洋物理场超分辨率”研究中的数据准备阶段。
+
+需要额外说明的是，本仓库当前只针对下面这个研究区域：
+
+- 最小纬度：`0`
+- 最大纬度：`45`
+- 最小经度：`105`
+- 最大经度：`135`
+
+因此，仓库中涉及下载、切分、对齐和样本构造的数据，默认都是围绕这个区域展开的。
+
+它负责的内容包括：
+
+- 下载相关数据集
+- 将原始 `nc` 文件切分为便于后续处理的 `npy` 文件
+- 完成 ERA5 与 CMEMS 数据之间必要的时空对齐整理
+- 生成可用于后续研究的配对样本
+
+本仓库不负责更进一步的内容，例如：
+
+- 神经网络模型设计与训练
+- 下游任务构建与评估
+- 数值计算模型的部署与使用
+- 完整工程系统的落地实现
+
+因此，更准确地说，这个仓库的定位是：
+
+- 为海洋物理场超分辨率研究提供数据集下载、处理与配对样本准备方案
+
 # CMEMS Wave Download
 
 这个项目现在已经接好了 `copernicusmarine`，可以直接下载下面两个产品里这 3 个变量：
@@ -23,8 +54,8 @@
 
 下面示例命令统一使用这组默认参数：
 
-- 账号：`rcui1`
-- 密码：`Cuiruochu1`
+- 账号：`your_username`
+- 密码：`your_password`
 - 最小纬度：`0`
 - 最大纬度：`45`
 - 最小经度：`105`
@@ -37,8 +68,8 @@
 `cmd`:
 
 ```cmd
-set CMEMS_USERNAME=rcui1
-set CMEMS_PASSWORD=Cuiruochu1
+set CMEMS_USERNAME=your_username
+set CMEMS_PASSWORD=your_password
 uv run python .\scripts\download_cmems_waves.py ^
   --min-lon 105 ^
   --max-lon 135 ^
@@ -52,8 +83,8 @@ uv run python .\scripts\download_cmems_waves.py ^
 `pwsh`:
 
 ```powershell
-$env:CMEMS_USERNAME="rcui1"
-$env:CMEMS_PASSWORD="Cuiruochu1"
+$env:CMEMS_USERNAME="your_username"
+$env:CMEMS_PASSWORD="your_password"
 uv run python .\scripts\download_cmems_waves.py `
   --min-lon 105 `
   --max-lon 135 `
@@ -67,8 +98,8 @@ uv run python .\scripts\download_cmems_waves.py `
 `bash`:
 
 ```bash
-export CMEMS_USERNAME="rcui1"
-export CMEMS_PASSWORD="Cuiruochu1"
+export CMEMS_USERNAME="your_username"
+export CMEMS_PASSWORD="your_password"
 uv run python ./scripts/download_cmems_waves.py \
   --min-lon 105 \
   --max-lon 135 \
@@ -83,8 +114,8 @@ uv run python ./scripts/download_cmems_waves.py \
 
 ```powershell
 uv run python .\scripts\download_cmems_waves.py `
-  --username "rcui1" `
-  --password "Cuiruochu1" `
+  --username "your_username" `
+  --password "your_password" `
   --min-lon 105 `
   --max-lon 135 `
   --min-lat 0 `
