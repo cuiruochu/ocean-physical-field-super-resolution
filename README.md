@@ -99,6 +99,27 @@ uv run python .\download_cmems_waves.py `
   --end 2020-01-31T21:00:00
 ```
 
+## 下载结果
+
+- 下载文件格式是 NetCDF，扩展名为 `.nc`
+- 默认下载目录是项目下的 [downloads](<E:\projects\CMEMS\downloads>)，也就是 `E:\projects\CMEMS\downloads`
+- 如果传入 `--output-dir`，文件会下载到你指定的目录
+- 脚本执行成功后，会在终端打印每个文件的实际完整路径
+
+默认文件名格式如下：
+
+```text
+analysisforecast_开始时间_结束时间_lon最小经度_最大经度_lat最小纬度_最大纬度.nc
+multiyear_开始时间_结束时间_lon最小经度_最大经度_lat最小纬度_最大纬度.nc
+```
+
+例如：
+
+```text
+E:\projects\CMEMS\downloads\analysisforecast_20250101T000000_20250103T210000_lon120_125_lat18_22.nc
+E:\projects\CMEMS\downloads\multiyear_20250101T000000_20250103T210000_lon120_125_lat18_22.nc
+```
+
 ## 可选参数
 
 - `--username`：CMEMS 用户名，也可用环境变量 `CMEMS_USERNAME`
