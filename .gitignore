@@ -14,3 +14,6 @@ downloads/
 
 # Derived numpy data
 data/
+
+# Temporary previews and helper scripts
+tmp/
