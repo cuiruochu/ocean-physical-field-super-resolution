@@ -19,8 +19,8 @@
 
 下面示例命令统一使用这组默认参数：
 
-- 账号：`1211304813@qq.com`
-- 密码：`cuiruochu1`
+- 账号：`rcui1`
+- 密码：`Cuiruochu1`
 - 最小纬度：`0`
 - 最大纬度：`45`
 - 最小经度：`105`
@@ -31,8 +31,8 @@
 `cmd`:
 
 ```cmd
-set CMEMS_USERNAME=1211304813@qq.com
-set CMEMS_PASSWORD=cuiruochu1
+set CMEMS_USERNAME=rcui1
+set CMEMS_PASSWORD=Cuiruochu1
 uv run python .\scripts\download_cmems_waves.py ^
   --min-lon 105 ^
   --max-lon 135 ^
@@ -46,8 +46,8 @@ uv run python .\scripts\download_cmems_waves.py ^
 `pwsh`:
 
 ```powershell
-$env:CMEMS_USERNAME="1211304813@qq.com"
-$env:CMEMS_PASSWORD="cuiruochu1"
+$env:CMEMS_USERNAME="rcui1"
+$env:CMEMS_PASSWORD="Cuiruochu1"
 uv run python .\scripts\download_cmems_waves.py `
   --min-lon 105 `
   --max-lon 135 `
@@ -61,8 +61,8 @@ uv run python .\scripts\download_cmems_waves.py `
 `bash`:
 
 ```bash
-export CMEMS_USERNAME="1211304813@qq.com"
-export CMEMS_PASSWORD="cuiruochu1"
+export CMEMS_USERNAME="rcui1"
+export CMEMS_PASSWORD="Cuiruochu1"
 uv run python ./scripts/download_cmems_waves.py \
   --min-lon 105 \
   --max-lon 135 \
@@ -77,8 +77,8 @@ uv run python ./scripts/download_cmems_waves.py \
 
 ```powershell
 uv run python .\scripts\download_cmems_waves.py `
-  --username "1211304813@qq.com" `
-  --password "cuiruochu1" `
+  --username "rcui1" `
+  --password "Cuiruochu1" `
   --min-lon 105 `
   --max-lon 135 `
   --min-lat 0 `
