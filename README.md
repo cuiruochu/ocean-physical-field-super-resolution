@@ -6,6 +6,10 @@
 - `GLOBAL_MULTIYEAR_WAV_001_032`
 - 变量固定为 `VMDR`、`VTM10`、`VHM0`
 
+哥白尼海洋产品官网下载入口：
+
+- [Copernicus Marine Products](https://data.marine.copernicus.eu/products)
+
 实际下载使用的 dataset id 是：
 
 - `GLOBAL_ANALYSISFORECAST_WAV_001_027` -> `cmems_mod_glo_wav_anfc_0.083deg_PT3H-i`
@@ -29,7 +33,7 @@
 ```cmd
 set CMEMS_USERNAME=1211304813@qq.com
 set CMEMS_PASSWORD=cuiruochu1
-uv run python .\download_cmems_waves.py ^
+uv run python .\scripts\download_cmems_waves.py ^
   --min-lon 105 ^
   --max-lon 135 ^
   --min-lat 0 ^
@@ -44,7 +48,7 @@ uv run python .\download_cmems_waves.py ^
 ```powershell
 $env:CMEMS_USERNAME="1211304813@qq.com"
 $env:CMEMS_PASSWORD="cuiruochu1"
-uv run python .\download_cmems_waves.py `
+uv run python .\scripts\download_cmems_waves.py `
   --min-lon 105 `
   --max-lon 135 `
   --min-lat 0 `
@@ -59,7 +63,7 @@ uv run python .\download_cmems_waves.py `
 ```bash
 export CMEMS_USERNAME="1211304813@qq.com"
 export CMEMS_PASSWORD="cuiruochu1"
-uv run python ./download_cmems_waves.py \
+uv run python ./scripts/download_cmems_waves.py \
   --min-lon 105 \
   --max-lon 135 \
   --min-lat 0 \
@@ -69,22 +73,10 @@ uv run python ./download_cmems_waves.py \
   --output-dir ./downloads
 ```
 
-或者直接运行：
-
-```powershell
-uv run python .\main.py `
-  --min-lon 105 `
-  --max-lon 135 `
-  --min-lat 0 `
-  --max-lat 45 `
-  --start 2026-01-01T00:00:00 `
-  --end 2026-05-01T00:00:00
-```
-
 如果你想直接把账号密码写到命令行，也支持：
 
 ```powershell
-uv run python .\download_cmems_waves.py `
+uv run python .\scripts\download_cmems_waves.py `
   --username "1211304813@qq.com" `
   --password "cuiruochu1" `
   --min-lon 105 `
@@ -98,7 +90,7 @@ uv run python .\download_cmems_waves.py `
 只下载其中一个产品时：
 
 ```powershell
-uv run python .\download_cmems_waves.py `
+uv run python .\scripts\download_cmems_waves.py `
   --products GLOBAL_MULTIYEAR_WAV_001_032 `
   --min-lon 105 `
   --max-lon 135 `
