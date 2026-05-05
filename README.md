@@ -12,8 +12,12 @@
 
 实际下载使用的 dataset id 是：
 
-- `GLOBAL_ANALYSISFORECAST_WAV_001_027` -> `cmems_mod_glo_wav_anfc_0.083deg_PT3H-i`
-- `GLOBAL_MULTIYEAR_WAV_001_032` -> `cmems_mod_glo_wav_my_0.2deg_PT3H-i`
+- `GLOBAL_ANALYSISFORECAST_WAV_001_027`
+- `GLOBAL_MULTIYEAR_WAV_001_032`
+
+默认的下载路径：
+- .\downloads
+- 确保不要携带中文路径，否则可能会失败
 
 ## 用法
 
@@ -129,3 +133,63 @@ E:\projects\CMEMS\downloads\multiyear_20260101T000000_20260501T000000_lon105_135
 - `--skip-existing`：目标文件已存在时跳过
 - `--dry-run`：只检查请求，不实际下载
 - `--no-progress`：关闭进度条
+
+## NC 转 NPY
+
+脚本 [split_nc_to_npy.py](<E:\projects\CMEMS\scripts\split_nc_to_npy.py>)，用于把某个 `.nc` 文件按时间维切分成一批 `.npy` 文件。
+
+- 每个 `.npy` 文件对应一个时间点和一个变量
+- 文件名格式是 `2026-01-01T00.npy`
+- 数据统一转换为 `float32`
+- 原始缺失值会继续保留为 `NaN`
+- 默认输出目录是项目下的 [data](<E:\projects\CMEMS\data>)，最终会自动拼接成 `data\nc文件名\变量名\`
+- 每个 `.npy` 文件的 shape 是 `(纬度数, 经度数)`
+- 当前变量目录会按 `VMDR`、`VTM10`、`VHM0` 分开保存
+
+例如输入文件：
+
+```text
+E:\projects\CMEMS\downloads\analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45.nc
+```
+
+默认会输出到：
+
+```text
+E:\projects\CMEMS\data\analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45\
+```
+
+其中目录结构类似：
+
+```text
+E:\projects\CMEMS\data\analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45\
+  VMDR\
+    2025-12-31T18.npy
+    2025-12-31T21.npy
+  VTM10\
+    2025-12-31T18.npy
+    2025-12-31T21.npy
+  VHM0\
+    2025-12-31T18.npy
+    2025-12-31T21.npy
+```
+
+`pwsh` 示例：
+
+```powershell
+uv run python .\scripts\split_nc_to_npy.py `
+  .\downloads\analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45.nc
+```
+
+指定输出根目录时，仍然会自动拼接 `nc` 文件名：
+
+```powershell
+uv run python .\scripts\split_nc_to_npy.py `
+  .\downloads\analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45.nc `
+  --output-dir .\my_npy_data
+```
+
+上面这条命令最终会输出到：
+
+```text
+E:\projects\CMEMS\my_npy_data\analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45\
+```
