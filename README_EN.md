@@ -653,6 +653,18 @@ then continuing to emphasize “network innovation” easily becomes:
 
 This does not mean neural-network innovation is unimportant. It means that in this specific area, problem definition, practical value, and downstream-task identification should come before architectural novelty.
 
+I have also personally tried to innovate at the level of neural network architecture or modules, and I found that it is still extremely difficult and requires a large amount of experimentation. With my current level of knowledge and experience, I do not think I am yet capable of designing a truly excellent neural network architecture on my own.
+
+Therefore, if a researcher wants to use the data construction workflow provided by this repository to train a neural network, I would personally recommend starting with `EDSR`.
+
+My reasons for recommending `EDSR` are:
+
+- the operators it uses are relatively simple
+- it runs fast on GPUs
+- its code is open source, making reproduction and modification convenient
+
+So for this direction, `EDSR` is a very good starting point.
+
 ## I Hope to Communicate With Other Researchers in This Area
 
 All of the regrets, limitations, and unfinished parts described above are my genuine feelings about this topic.
