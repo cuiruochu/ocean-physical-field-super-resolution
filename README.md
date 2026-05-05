@@ -13,50 +13,59 @@
 
 ## 用法
 
-推荐直接用账号密码认证。为了避免密码出现在命令历史里，建议先设置环境变量。
+下面示例命令统一使用这组默认参数：
+
+- 账号：`1211304813@qq.com`
+- 密码：`cuiruochu1`
+- 最小纬度：`0`
+- 最大纬度：`45`
+- 最小经度：`105`
+- 最大经度：`135`
+- 开始时间：`2026-01-01T00:00:00`
+- 结束时间：`2026-05-01T00:00:00`
 
 `cmd`:
 
 ```cmd
-set CMEMS_USERNAME=你的用户名
-set CMEMS_PASSWORD=你的密码
+set CMEMS_USERNAME=1211304813@qq.com
+set CMEMS_PASSWORD=cuiruochu1
 uv run python .\download_cmems_waves.py ^
-  --min-lon 120 ^
-  --max-lon 125 ^
-  --min-lat 18 ^
-  --max-lat 22 ^
-  --start 2025-01-01T00:00:00 ^
-  --end 2025-01-03T21:00:00 ^
+  --min-lon 105 ^
+  --max-lon 135 ^
+  --min-lat 0 ^
+  --max-lat 45 ^
+  --start 2026-01-01T00:00:00 ^
+  --end 2026-05-01T00:00:00 ^
   --output-dir .\downloads
 ```
 
 `pwsh`:
 
 ```powershell
-$env:CMEMS_USERNAME="你的用户名"
-$env:CMEMS_PASSWORD="你的密码"
+$env:CMEMS_USERNAME="1211304813@qq.com"
+$env:CMEMS_PASSWORD="cuiruochu1"
 uv run python .\download_cmems_waves.py `
-  --min-lon 120 `
-  --max-lon 125 `
-  --min-lat 18 `
-  --max-lat 22 `
-  --start 2025-01-01T00:00:00 `
-  --end 2025-01-03T21:00:00 `
+  --min-lon 105 `
+  --max-lon 135 `
+  --min-lat 0 `
+  --max-lat 45 `
+  --start 2026-01-01T00:00:00 `
+  --end 2026-05-01T00:00:00 `
   --output-dir .\downloads
 ```
 
 `bash`:
 
 ```bash
-export CMEMS_USERNAME="你的用户名"
-export CMEMS_PASSWORD="你的密码"
+export CMEMS_USERNAME="1211304813@qq.com"
+export CMEMS_PASSWORD="cuiruochu1"
 uv run python ./download_cmems_waves.py \
-  --min-lon 120 \
-  --max-lon 125 \
-  --min-lat 18 \
-  --max-lat 22 \
-  --start 2025-01-01T00:00:00 \
-  --end 2025-01-03T21:00:00 \
+  --min-lon 105 \
+  --max-lon 135 \
+  --min-lat 0 \
+  --max-lat 45 \
+  --start 2026-01-01T00:00:00 \
+  --end 2026-05-01T00:00:00 \
   --output-dir ./downloads
 ```
 
@@ -64,26 +73,26 @@ uv run python ./download_cmems_waves.py \
 
 ```powershell
 uv run python .\main.py `
-  --min-lon 120 `
-  --max-lon 125 `
-  --min-lat 18 `
-  --max-lat 22 `
-  --start 2025-01-01T00:00:00 `
-  --end 2025-01-03T21:00:00
+  --min-lon 105 `
+  --max-lon 135 `
+  --min-lat 0 `
+  --max-lat 45 `
+  --start 2026-01-01T00:00:00 `
+  --end 2026-05-01T00:00:00
 ```
 
 如果你想直接把账号密码写到命令行，也支持：
 
 ```powershell
 uv run python .\download_cmems_waves.py `
-  --username "你的用户名" `
-  --password "你的密码" `
-  --min-lon 120 `
-  --max-lon 125 `
-  --min-lat 18 `
-  --max-lat 22 `
-  --start 2025-01-01T00:00:00 `
-  --end 2025-01-03T21:00:00
+  --username "1211304813@qq.com" `
+  --password "cuiruochu1" `
+  --min-lon 105 `
+  --max-lon 135 `
+  --min-lat 0 `
+  --max-lat 45 `
+  --start 2026-01-01T00:00:00 `
+  --end 2026-05-01T00:00:00
 ```
 
 只下载其中一个产品时：
@@ -91,12 +100,12 @@ uv run python .\download_cmems_waves.py `
 ```powershell
 uv run python .\download_cmems_waves.py `
   --products GLOBAL_MULTIYEAR_WAV_001_032 `
-  --min-lon 120 `
-  --max-lon 125 `
-  --min-lat 18 `
-  --max-lat 22 `
-  --start 2020-01-01T00:00:00 `
-  --end 2020-01-31T21:00:00
+  --min-lon 105 `
+  --max-lon 135 `
+  --min-lat 0 `
+  --max-lat 45 `
+  --start 2026-01-01T00:00:00 `
+  --end 2026-05-01T00:00:00
 ```
 
 ## 下载结果
@@ -116,8 +125,8 @@ multiyear_开始时间_结束时间_lon最小经度_最大经度_lat最小纬度
 例如：
 
 ```text
-E:\projects\CMEMS\downloads\analysisforecast_20250101T000000_20250103T210000_lon120_125_lat18_22.nc
-E:\projects\CMEMS\downloads\multiyear_20250101T000000_20250103T210000_lon120_125_lat18_22.nc
+E:\projects\CMEMS\downloads\analysisforecast_20260101T000000_20260501T000000_lon105_135_lat0_45.nc
+E:\projects\CMEMS\downloads\multiyear_20260101T000000_20260501T000000_lon105_135_lat0_45.nc
 ```
 
 ## 可选参数
